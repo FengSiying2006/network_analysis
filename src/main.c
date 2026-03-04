@@ -8,6 +8,7 @@
 #include "star.h"
 #include "security.h"
 #include "graph_builder.h"
+#include "advanced_analysis.h" 
 
 int main(int argc, char** argv) {
     if (argc < 3) {
@@ -54,6 +55,9 @@ int main(int argc, char** argv) {
     else if (strcmp(cmd, "SUBGRAPH") == 0 && argc == 5) {
         extract_subgraph(g, argv[3], atoi(argv[4])); 
     }
+    else if (strcmp(cmd, "EXPORT_JSON") == 0) {
+        export_graph_json(g);
+    } 
     else {
         printf("{\"error\": \"Unknown command\"}\n");
     }
