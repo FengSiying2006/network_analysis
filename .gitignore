@@ -1,0 +1,9 @@
+build/
+*.exe
+*.o
+*.obj
+__pycache__/
+*.html
+.vscode/
+data/pcap_samples/*.pcap
+*.DS_Store
