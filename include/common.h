@@ -25,5 +25,5 @@ typedef struct {
 // 工具函数声明
 uint32_t ip_str_to_uint32(const char* ip);
 void uint32_to_ip_str(uint32_t ip, char* buf);
-
+int cmp_uint32_search(const void* a, const void* b);
 #endif // COMMON_H

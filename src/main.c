@@ -7,6 +7,7 @@
 #include "path.h"
 #include "star.h"
 #include "security.h"
+#include "graph_builder.h"
 
 int main(int argc, char** argv) {
     if (argc < 3) {

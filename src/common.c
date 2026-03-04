@@ -18,3 +18,11 @@ void uint32_to_ip_str(uint32_t ip, char* buf) {
             (ip >> 8) & 0xFF, 
             ip & 0xFF);
 }
+
+int cmp_uint32_search(const void* a, const void* b) {
+    uint32_t val_a = *(const uint32_t*)a;
+    uint32_t val_b = *(const uint32_t*)b;
+    if (val_a < val_b) return -1;
+    if (val_a > val_b) return 1;
+    return 0;
+}

@@ -6,15 +6,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-// 比较函数：用于二分查找 IP 地址
-static int cmp_uint32_search(const void* a, const void* b) {
-    uint32_t val_a = *(const uint32_t*)a;
-    uint32_t val_b = *(const uint32_t*)b;
-    if (val_a < val_b) return -1;
-    if (val_a > val_b) return 1;
-    return 0;
-}
-
 // 二分查找获取节点 ID
 static int get_node_id(Graph* g, uint32_t ip) {
     uint32_t* res = (uint32_t*)bsearch(&ip, g->ip_map, g->num_nodes, sizeof(uint32_t), cmp_uint32_search);

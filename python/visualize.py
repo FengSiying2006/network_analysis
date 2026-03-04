@@ -41,11 +41,22 @@ def visualize_graph(json_data, output_file="network_graph.html"):
 
         # Handling Subgraph (Custom JSON structure from C 'SUBGRAPH' cmd)
         elif 'nodes' in data and 'edges' in data:
+            # 添加节点
             for node in data['nodes']:
-                net.add_node(node['id'], label=node['id'], value=node.get('traffic', 1))
+                # label显示IP，title鼠标悬停显示详情
+                net.add_node(node['id'], label=node.get('label', node['id']), 
+                             title=node.get('label', node['id']), color="#97C2FC")
+            
+            # 添加边
             for edge in data['edges']:
-                net.add_edge(edge['from'], edge['to'], value=edge.get('traffic', 1))
-        
+                # 根据流量大小调整边的粗细 (简单映射：1 + 流量/1MB)
+                traffic = edge.get('value', 0)
+                width = 1 + (traffic / 1024 / 1024) 
+                if width > 10: width = 10 # 限制最大粗细
+                
+                label_text = f"{traffic} bytes"
+                net.add_edge(edge['from'], edge['to'], value=traffic, width=width, 
+                             title=label_text, arrowStrikethrough=False)
         else:
             print("Unknown JSON format for visualization.")
             return
@@ -55,11 +66,13 @@ def visualize_graph(json_data, output_file="network_graph.html"):
         print(f"Graph saved to {output_file}")
         
         # Automatically open in browser
-        webbrowser.open('file://' + os.path.realpath(output_file))
+        abs_path = os.path.realpath(output_file)
+        webbrowser.open('file://' + abs_path)
 
     except json.JSONDecodeError:
         print("Invalid JSON data provided.")
-
+    except Exception as e:
+        print(f"Visualization Error: {e}")
 if __name__ == "__main__":
     # Example usage for testing: passing a JSON string as an argument
     if len(sys.argv) > 1:
